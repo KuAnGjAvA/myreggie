@@ -6,6 +6,8 @@ package com.kuang.reggie.utils;
  */
 public class SMSUtils {
 
-	
+	public static void tste(){
+        System.out.println("ikun");
+    }
 
 }
