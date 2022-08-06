@@ -1,5 +1,8 @@
 package com.kuang.reggie.common;
 
+import org.springframework.stereotype.Component;
+
+//@Component
 public class BaseContext {
 
     public static final ThreadLocal<Long> threadLocal = new ThreadLocal<>();

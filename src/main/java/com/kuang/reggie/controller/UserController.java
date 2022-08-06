@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuang.reggie.common.R;
 import com.kuang.reggie.entity.User;
 import com.kuang.reggie.service.UserService;
+//import com.kuang.reggie.utils.SMSUtils;
 import com.kuang.reggie.utils.SMSUtils;
 import com.kuang.reggie.utils.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -36,11 +37,16 @@ public class UserController {
 
         if (!StringUtils.isEmpty(phone)) {
             //获取验证码
+            //生成4位随机的验证码
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
 
             //将验证码保存到session key:phone value:code
             HttpSession session = request.getSession();
             session.setAttribute(phone, code);
+
+            //将验证码发到用户手机上
+//        sendMessage("阿里云短信测试","测试专用模板","手机号码","验证码")
+            SMSUtils.sendMessage("阿里云短信测试","SMS_154950909",phone,code);
 
             log.info("号码为{},的验证码为===================={}", phone, code);
             return R.success("获取验证码成功");
@@ -56,6 +62,7 @@ public class UserController {
         //获取手机号码和页面输入的验证码
         String phone = (String) map.get("phone");
         String code = (String) map.get("code");
+
 
         //将页面获取的数据与session进行比对
         HttpSession session = request.getSession();

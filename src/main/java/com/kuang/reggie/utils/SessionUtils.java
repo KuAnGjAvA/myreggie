@@ -1,37 +1,40 @@
 //package com.kuang.reggie.utils;
 //
-//import net.sf.jsqlparser.expression.operators.relational.GreaterThanEquals;
-//import org.springframework.beans.factory.annotation.Autowired;
+//import com.aliyuncs.DefaultAcsClient;
+//import com.aliyuncs.IAcsClient;
+//import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
+//import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+//import com.aliyuncs.exceptions.ClientException;
+//import com.aliyuncs.profile.DefaultProfile;
 //import org.springframework.stereotype.Component;
 //
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpSession;
-//
-///**
-// * 获取用户或者员工登录的id
-// */
 //@Component
 //public class SessionUtils {
 //
-//    @Autowired
-//    public static HttpServletRequest request;
 //
-//    //获取用户登录的id
-//    public static Long getUserLoginId() {
-//        HttpSession session = request.getSession();
-//        return (Long)session.getAttribute("user");
-//    }
+//    /**
+//     * 发送短信
+//     * @param signName 签名
+//     * @param templateCode 模板
+//     * @param phoneNumbers 手机号
+//     * @param param 参数
+//     */
+//    public static void sendMessage(String signName, String templateCode,String phoneNumbers,String param){
+//        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "", "");
+//        IAcsClient client = new DefaultAcsClient(profile);
 //
-//    //添加用户登录的id
-//    public static void addUserLoginId(Long userId) {
-//        HttpSession session = request.getSession();
-//        session.setAttribute("user",userId);
-//    }
-//
-//    //删除用户登录的id
-//    public static void deleteUserLoginId(Long userId) {
-//        HttpSession session = request.getSession();
-//        session.removeAttribute("user");
+//        SendSmsRequest request = new SendSmsRequest();
+//        request.setSysRegionId("cn-hangzhou");
+//        request.setPhoneNumbers(phoneNumbers);
+//        request.setSignName(signName);
+//        request.setTemplateCode(templateCode);
+//        request.setTemplateParam("{\"code\":\""+param+"\"}");
+//        try {
+//            SendSmsResponse response = client.getAcsResponse(request);
+//            System.out.println("短信发送成功");
+//        }catch (ClientException e) {
+//            e.printStackTrace();
+//        }
 //    }
 //
 //}

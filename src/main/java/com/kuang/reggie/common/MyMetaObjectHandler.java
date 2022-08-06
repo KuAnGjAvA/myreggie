@@ -20,7 +20,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-
 //        log.info("当前登录的id为=====>" + BaseContext.getCurrent());
         HttpSession session = httpServletRequest.getSession();
         metaObject.setValue("createTime", LocalDateTime.now());
